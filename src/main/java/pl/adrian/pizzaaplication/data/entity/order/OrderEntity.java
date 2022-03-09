@@ -3,6 +3,7 @@ package pl.adrian.pizzaaplication.data.entity.order;
 import pl.adrian.pizzaaplication.data.entity.ordersize.OrderSizeEntity;
 import pl.adrian.pizzaaplication.data.entity.pizza.PizzaEntity;
 
+import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.Set;
@@ -13,7 +14,7 @@ public class OrderEntity {
 
 
     @Id
-    @GeneratedValue(stategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Integer id;
 

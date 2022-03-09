@@ -2,6 +2,7 @@ package pl.adrian.pizzaaplication.data.entity.size;
 
 import pl.adrian.pizzaaplication.data.entity.pizza.PizzaEntity;
 
+import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.Set;
 
@@ -11,7 +12,7 @@ public class SizeEntity {
 
 
     @Id
-    @GeneratedValue(stategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Integer id;
 

@@ -4,12 +4,14 @@ import pl.adrian.pizzaaplication.data.entity.order.OrderEntity;
 import pl.adrian.pizzaaplication.data.entity.pizza.PizzaEntity;
 import pl.adrian.pizzaaplication.data.entity.size.SizeEntity;
 
+import javax.persistence.*;
+
 @Entity
 @Table(name = "orders_sizes")
 public class OrderSizeEntity {
 
         @Id
-        @GeneratedValue(stategy = GenerationType.IDENTITY)
+        @GeneratedValue(strategy = GenerationType.IDENTITY)
         @Column(name = "id")
         private Integer id;
 
