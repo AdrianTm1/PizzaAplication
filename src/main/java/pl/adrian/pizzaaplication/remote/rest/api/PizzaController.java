@@ -19,13 +19,13 @@ public class PizzaController {
 
     @PutMapping("/{pizza-id}")
     public ResponseEntity<PizzaDto> updatePizza(@RequestBody PizzaDto PizzaDto,
-                                            @PathVariable("pizza-id") Integer orderId,
+                                            @PathVariable("pizza-id") Integer pizzaId,
                                             @RequestHeader("Access-Token") String token) {
         return ResponseEntity.ok(null);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deletePizza(@PathVariable("id") Integer id,
+    public ResponseEntity<Void> deletePizza(@PathVariable("id") Integer pizzaId,
                                             @RequestHeader("Access-Token") String token)  {
         return ResponseEntity.ok(null);
     }
