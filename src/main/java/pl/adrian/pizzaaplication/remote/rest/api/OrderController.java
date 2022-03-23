@@ -38,7 +38,7 @@ public class OrderController {
     @DeleteMapping("/{order-id}")
     public ResponseEntity<Void>deleteOrder(@PathVariable("order-id") Integer orderId,
                                                         @RequestHeader("Access-Token") String token)  {
-        return ResponseEntity.ok(null);
+        return ResponseEntity.ok().build();
 
     }
 

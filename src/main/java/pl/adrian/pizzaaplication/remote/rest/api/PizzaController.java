@@ -4,6 +4,7 @@ package pl.adrian.pizzaaplication.remote.rest.api;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pl.adrian.pizzaaplication.remote.rest.dto.request.AddPizzaDto;
+import pl.adrian.pizzaaplication.remote.rest.dto.request.UpdatePizzaDto;
 import pl.adrian.pizzaaplication.remote.rest.dto.response.PizzaDto;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
@@ -18,7 +19,7 @@ public class PizzaController {
     }
 
     @PutMapping("/{pizza-id}")
-    public ResponseEntity<PizzaDto> updatePizza(@RequestBody PizzaDto PizzaDto,
+    public ResponseEntity<PizzaDto> updatePizza(@RequestBody UpdatePizzaDto updatePizzaDto,
                                             @PathVariable("pizza-id") Integer pizzaId,
                                             @RequestHeader("Access-Token") String token) {
         return ResponseEntity.ok(null);
@@ -27,7 +28,7 @@ public class PizzaController {
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deletePizza(@PathVariable("id") Integer pizzaId,
                                             @RequestHeader("Access-Token") String token)  {
-        return ResponseEntity.ok(null);
+        return ResponseEntity.ok().build();
     }
 
 
