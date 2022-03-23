@@ -3,6 +3,7 @@ package pl.adrian.pizzaaplication.remote.rest.api;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import pl.adrian.pizzaaplication.domain.service.PizzaService;
 import pl.adrian.pizzaaplication.remote.rest.dto.request.AddPizzaDto;
 import pl.adrian.pizzaaplication.remote.rest.dto.request.UpdatePizzaDto;
 import pl.adrian.pizzaaplication.remote.rest.dto.response.PizzaDto;
@@ -12,10 +13,17 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 @RestController
 public class PizzaController {
 
+    private final PizzaService pizzaService;
+
+    public PizzaController(PizzaService pizzaService) {
+        this.pizzaService = pizzaService;
+    }
+
     @PostMapping
     public ResponseEntity<PizzaDto> addPizza(@RequestHeader("Access-token") String token,
-                                             @RequestBody AddPizzaDto AddPizzaDto) {
-        return ResponseEntity.ok(null);
+                                             @RequestBody AddPizzaDto addPizzaDto) {
+        PizzaDto pizzaDto = pizzaService.addPizza(addPizzaDto, token);
+        return ResponseEntity.ok(pizzaDto);
     }
 
     @PutMapping("/{pizza-id}")
