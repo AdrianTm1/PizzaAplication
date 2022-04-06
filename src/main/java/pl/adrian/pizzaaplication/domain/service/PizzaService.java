@@ -1,6 +1,7 @@
 package pl.adrian.pizzaaplication.domain.service;
 
 import org.springframework.stereotype.Service;
+import pl.adrian.pizzaaplication.data.entity.pizza.PizzaEntity;
 import pl.adrian.pizzaaplication.data.entity.size.SizeEntity;
 import pl.adrian.pizzaaplication.data.repository.PizzaRepository;
 import pl.adrian.pizzaaplication.data.repository.SizeRepository;
@@ -41,7 +42,8 @@ public class PizzaService {
 //        }
 
         //wpisujemy name pizzy do bazy danych
-        pizzaRepository.save(pizzaMapper.mapToPizzaEntity(addPizzaDto));
+        PizzaEntity pizzaEntity = pizzaMapper.mapToPizzaEntity(addPizzaDto);
+        pizzaRepository.save(pizzaEntity);
 
 
         //wpisujemy liste rozmiar+cena do DB
@@ -49,14 +51,16 @@ public class PizzaService {
         List<AddSizeDto> addSizeDtoList = addPizzaDto.getSizes();
         List<SizeEntity> sizeEntities = addSizeDtoList
                 .stream()
-                .map(addSizeDto -> sizeMapper.mapToSizeEntity(addSizeDto, pizzaEntity.getId()));
+                .map(addSizeDto -> sizeMapper.mapToSizeEntity(addSizeDto, pizzaEntity.getId()))
                 .collect(Collectors.toList());
         sizeRepository.saveAll(sizeEntities);
 
         //mapowanie z encji do PizzaDto
         List<SizeDto> sizeDtoList = sizeEntities.stream()
-                .map(sizeMapper::mapToSizeDto)
+                .map(sizeEntity -> sizeMapper.mapToSizeDto(sizeEntity))
                 .collect(Collectors.toList());
+
+
 
 //        List<SizeDto> sizeDtoList = savedSizeEntities
 //                .stream()
@@ -77,7 +81,7 @@ public class PizzaService {
 //        }).collect(Collectors.toList());
 //        PizzaEntity savedSizeEntity = sizeRepository.saveAll(sizeEntity);
 //
-        return pizzaMapper.mapToPizzaDto(pizzaEntity, addSizeDtoList);
+        return pizzaMapper.mapToPizzaDto(pizzaEntity, sizeDtoList);
     }
 
 }
