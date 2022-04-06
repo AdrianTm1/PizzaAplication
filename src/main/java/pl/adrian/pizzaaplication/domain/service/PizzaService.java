@@ -1,15 +1,19 @@
 package pl.adrian.pizzaaplication.domain.service;
 
+import org.springframework.boot.context.config.ConfigDataResourceNotFoundException;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.ResourceAccessException;
 import pl.adrian.pizzaaplication.data.entity.pizza.PizzaEntity;
 import pl.adrian.pizzaaplication.data.entity.size.SizeEntity;
 import pl.adrian.pizzaaplication.data.repository.PizzaRepository;
 import pl.adrian.pizzaaplication.data.repository.SizeRepository;
+import pl.adrian.pizzaaplication.domain.exception.ResourceNotFoundException;
 import pl.adrian.pizzaaplication.domain.mapper.PizzaMapper;
 import pl.adrian.pizzaaplication.domain.mapper.SizeMapper;
 import pl.adrian.pizzaaplication.domain.model.SizeType;
 import pl.adrian.pizzaaplication.remote.rest.dto.request.AddPizzaDto;
 import pl.adrian.pizzaaplication.remote.rest.dto.request.AddSizeDto;
+import pl.adrian.pizzaaplication.remote.rest.dto.response.MenuDto;
 import pl.adrian.pizzaaplication.remote.rest.dto.response.PizzaDto;
 import pl.adrian.pizzaaplication.remote.rest.dto.response.SizeDto;
 
@@ -25,6 +29,7 @@ public class PizzaService {
     private final PizzaRepository pizzaRepository;
     private final PizzaMapper pizzaMapper;
     private final SizeMapper sizeMapper;
+
 
     public PizzaService(SizeRepository sizeRepository, PizzaRepository pizzaRepository, PizzaMapper pizzaMapper, SizeMapper sizeMapper) {
         this.sizeRepository = sizeRepository;
@@ -84,4 +89,23 @@ public class PizzaService {
         return pizzaMapper.mapToPizzaDto(pizzaEntity, sizeDtoList);
     }
 
+    public MenuDto getMenu() {
+        List<PizzaEntity> pizzaEntities = pizzaRepository.findAll();
+        List<PizzaDto> pizzaDtoList = pizzaEntities
+                .stream()
+                .map(pizzaEntity -> pizzaMapper.mapToPizzaDto(pizzaEntity))
+                .collect(Collectors.toList());
+
+            return new MenuDto(pizzaDtoList);
+    }
+
+    public void deletePizza(Integer pizzaId, String token) {
+
+        checkToken(token);
+        boolean pizzaExist = pizzaRepository.existsById(pizzaId);
+        if (!pizzaExist) {
+            throw new ResourceNotFoundException("Pizza o podanym id nie istnieje");
+        }
+        pizzaRepository.deleteById(pizzaId);
+    }
 }
