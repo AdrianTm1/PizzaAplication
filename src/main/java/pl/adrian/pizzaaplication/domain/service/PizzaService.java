@@ -13,6 +13,7 @@ import pl.adrian.pizzaaplication.domain.mapper.SizeMapper;
 import pl.adrian.pizzaaplication.domain.model.SizeType;
 import pl.adrian.pizzaaplication.remote.rest.dto.request.AddPizzaDto;
 import pl.adrian.pizzaaplication.remote.rest.dto.request.AddSizeDto;
+import pl.adrian.pizzaaplication.remote.rest.dto.request.UpdatePizzaDto;
 import pl.adrian.pizzaaplication.remote.rest.dto.response.MenuDto;
 import pl.adrian.pizzaaplication.remote.rest.dto.response.PizzaDto;
 import pl.adrian.pizzaaplication.remote.rest.dto.response.SizeDto;
@@ -108,4 +109,46 @@ public class PizzaService {
         }
         pizzaRepository.deleteById(pizzaId);
     }
+
+    public PizzaDto updatePizza(UpdatePizzaDto updatePizzaDto, String token, Integer pizzaId) {
+        checkToken(token);
+        boolean pizzaExist = pizzaRepository.existsById(pizzaId);
+        if (!pizzaExist) {
+            throw new ResourceNotFoundException("Pizza o podanym id nie istnieje");
+        }
+    PizzaEntity pizzaEntity = pizzaRepository.getById(pizzaId);
+        pizzaEntity.setName(updatePizzaDto.getName());
+        pizzaRepository.save(pizzaEntity);
+
+        sizeRepository.deleteAllByPizzaId(pizzaId);
+
+        List<AddSizeDto> addSizeDtoList = updatePizzaDto.getSizes();
+        List<SizeEntity> sizeEntities = addSizeDtoList
+                .stream()
+                .map(addSizeDto -> sizeMapper.mapToSizeEntity(addSizeDto, pizzaId))
+                .collect(Collectors.toList());
+        sizeRepository.saveAll(sizeEntities);
+
+        List<SizeDto> sizeDtoList = sizeEntities.stream()
+                .map(sizeMapper::mapToSizeDto)
+                .collect(Collectors.toList());
+
+        return pizzaMapper.mapToPizzaDto(pizzaEntity, sizeDtoList);
+
+    }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
