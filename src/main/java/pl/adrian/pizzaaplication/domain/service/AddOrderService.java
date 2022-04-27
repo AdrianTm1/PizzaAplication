@@ -52,7 +52,7 @@ public class AddOrderService {
         String token = UUID.randomUUID().toString();
 
         Date now = new Date();
-        PersonOrderDto person = addOrderDto.getPersonOrderDto();
+        PersonOrderDto person = addOrderDto.getPerson();
         OrderEntity orderEntity = new OrderEntity();
         orderEntity.setClientName(person.getName());
         orderEntity.setClientAddress(person.getAddress());

@@ -6,7 +6,7 @@ import pl.adrian.pizzaaplication.data.entity.pizza.PizzaEntity;
 
 import java.util.List;
 
-public interface OrderRepository extends JpaRepository<PizzaEntity, Integer> {
+public interface OrderRepository extends JpaRepository<OrderEntity, Integer> {
 
     OrderEntity findByToken(String token);
 
