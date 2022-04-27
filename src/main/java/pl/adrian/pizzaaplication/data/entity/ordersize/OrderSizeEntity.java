@@ -32,4 +32,51 @@ public class OrderSizeEntity {
         @JoinColumn(name = "size_id", insertable = false, updatable = false)
         private SizeEntity size;
 
+        public Integer getId() {
+                return id;
+        }
+
+        public void setId(Integer id) {
+                this.id = id;
+        }
+
+        public Integer getSizeId() {
+                return sizeId;
+        }
+
+        public void setSizeId(Integer sizeId) {
+                this.sizeId = sizeId;
+        }
+
+        public Integer getOrderId() {
+                return orderId;
+        }
+
+        public void setOrderId(Integer orderId) {
+                this.orderId = orderId;
+        }
+
+        public Integer getSizeCount() {
+                return sizeCount;
+        }
+
+        public void setSizeCount(Integer sizeCount) {
+                this.sizeCount = sizeCount;
+        }
+
+        public OrderEntity getOrder() {
+                return order;
+        }
+
+        public void setOrder(OrderEntity order) {
+                this.order = order;
+        }
+
+        public SizeEntity getSize() {
+                return size;
+        }
+
+        public void setSize(SizeEntity size) {
+                this.size = size;
+        }
 }

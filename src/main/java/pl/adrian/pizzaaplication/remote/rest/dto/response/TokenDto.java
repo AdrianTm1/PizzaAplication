@@ -18,4 +18,7 @@ public class TokenDto {
         this.token = token;
     }
 
+    public void setToken(String token) {
+        this.token = token;
+    }
 }

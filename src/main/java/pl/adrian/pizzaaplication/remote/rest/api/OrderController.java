@@ -20,7 +20,8 @@ public class OrderController {
 
     @PostMapping
     public ResponseEntity<TokenDto> addOrder(@RequestBody AddOrderDto addOrderDto) {
-        return ResponseEntity.ok(null);
+        TokenDto tokenDto = addOrderService.addOrder(addOrderDto)
+        return ResponseEntity.ok(tokenDto);
     }
 
     @GetMapping("/status/{token}")
